@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="Code Generator" />
+	<meta property="og:url" content="" />
+	<meta property="og:description" content="" />
+	<meta property="og:image" content="" />
+	
+	<title>Code Generator</title>
+	
+	<style type="text/css">
+		body{
+			font-family: "맑은고딕","Malgun Gothic","Apple SD Gothic Neo","돋움",dotum,Arial,sans-serif;
+			font-size: 14px;
+			line-height: 1.428571429;
+		}
+		*{
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+		*:before, *:after {
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+		input, button, select, textarea {
+			font-family: inherit;
+			font-size: inherit;
+			line-height: inherit;
+			/* -webkit-appearance:none;
+			appearance: none; */
+			-webkit-box-shadow: none;
+			-moz-box-shadow: none;
+			box-shadow: none;
+		}
+		button, input, optgroup, select, textarea {
+			margin: 0;
+			font: inherit;
+			color: inherit;
+		}
+		select,button,input{
+			font-family: "맑은고딕","Malgun Gothic","Apple SD Gothic Neo","돋움",dotum,Arial,sans-serif;
+		}
+		textarea:focus, input:focus, select:focus{
+			outline: none;
+			border-color: #4F8EF7;
+		}
+
+		.container{
+			width: 800px;
+			padding: 25px;
+		}
+		.container > .title{
+			font-size: 26px;
+			color: #333;
+		}
+		table{
+			width: 100%;
+			border: 1px solid #ddd;
+			border-collapse: collapse;
+		}
+		table tr{
+			border-bottom: 1px solid #ddd;
+		}
+		table th{
+			border-right: 1px solid #ddd;
+			padding: 8px 12px;
+			text-align: left;
+			background-color: #eee;
+			color: #666;
+		}
+		table td{
+			padding: 8px 12px;
+		}
+		.form-control{
+			border: 1px solid #ddd;
+			color: #333;
+			padding: 4px 6px;
+			width: 100%;
+		}
+		select{
+			border: 1px solid #ddd;
+			color: #333;
+			padding: 4px 6px;
+		}
+		.result{
+			display: block;
+			padding: 8px;
+			border: 1px solid #ddd;
+			width: 100%;
+			font-family: "Consolas";
+			margin: 25px 0;
+			resize: vertical;
+		}
+		.data-param > .row{
+			width: 90%;
+			margin-bottom: 4px;
+			padding: 4px 0;
+			position: relative;
+			padding-right: 30px;
+		}
+		.data-param > .row > .form:hover{
+			background-color: #E8F2FE;
+		}
+		.data-param > .row:hover button{
+			display: inline-block;
+		}
+		.data-param > .row > .form > input{
+			width: 49%;
+			border-top: 0;
+			border-left: 0;
+			border-right: 0;
+			border-bottom: 1px solid #ddd;
+			font-size: 13px;
+			padding: 4px 2px;
+			background-color: transparent;
+		}
+		.data-param > .row > .form > input:first-child{
+			margin-right: 1%;
+		}
+		.data-param > .row > button{
+			position: absolute;
+			top: 5px;
+			right: 5px;
+			border: 0;
+			background-color: #fff;
+			color: #C2C1C1;
+			cursor: pointer;
+			display: none;
+		}
+		.btn{
+			padding: 8px 14px;
+			background-color: #4F8EF7;
+			border: 0;
+			color: #fff;
+			cursor: pointer;
+		}
+		.btn:hover{
+			background-color: #649BF5;
+		}
+	</style>
+	<link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+</head>
+<body>
+<div class="container">
+	<h1 class="title">JQuery Ajax</h1>
+	<table>
+		<tr>
+			<th width="15%">method</th>
+			<td>
+				<select id="jq1method">
+					<option>GET</option>
+					<option>POST</option>
+					<option>PUT</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>url</th>
+			<td><input type="text" id="jq1url" placeholder="url" class="form-control"></td>
+		</tr>
+		<tr>
+			<th>dataType</th>
+			<td>
+				<select id="jq1dataType">
+					<option>json</option>
+					<option>xml</option>
+					<option>html</option>
+					<option>text</option>
+					<option>jsonp</option>
+					<option>script</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>timeout</th>
+			<td><input type="text" placeholder="timeout" id="jq1timeout" value="5000"  class="form-control" style="width:80px;"></td>
+		</tr>
+		<tr>
+			<th>data</th>
+			<td>
+				<div class="data-param" id="jq1data">
+					<div class="row">
+						<div class="form">
+						<input type="text" class="key" placeholder="Key"><input type="text" class="val" placeholder="Value">
+						</div>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<th>headers</th>
+			<td>
+				<div class="data-param" id="jq1headers">
+					<div class="row">
+						<div class="form">
+						<input type="text" class="key" placeholder="Key"><input type="text" class="val" placeholder="Value">
+						</div>
+					</div>
+				</div>
+			</td>
+		</tr>
+	</table>
+	<div style="margin:25px 0;text-align:right;"><button type="button" class="btn" onclick="gnrScriptAjax()">Generator</button></div>
+	<textarea class="result" id="codeAjax" onclick="this.select()" rows="8"></textarea>
+</div>
+
+<div class="container">
+	<h1 class="title">DB Table to DTO</h1>
+	<table>
+		<tr>
+			<th>package</th>
+			<td><input type="text" id="db1package" placeholder="package" class="form-control"></td>
+		</tr>
+		<tr>
+			<th>class</th>
+			<td><input type="text" id="db1class" placeholder="class" class="form-control"></td>
+		</tr>
+		<tr>
+			<th>table</th>
+			<td><input type="text" id="db1table" placeholder="table" class="form-control"></td>
+		</tr>
+		<tr>
+			<th>sqlMap</th>
+			<td>
+				<label><input type="radio" name="db1sqlmap" checked="checked">&nbsp;ibatis</label>
+				<label style="margin-left:8px;"><input type="radio" name="db1sqlmap">&nbsp;mybatis</label>
+			</td>
+		</tr>
+	</table>
+	<textarea class="result" id="inputDbTable">FORUM_SEQ	포럼일련번호	1	1	1	N	NUMBER (9)		None	0	0	0				False
+FORUM_NM	포럼명	2			Y	VARCHAR2 (200 Byte)		None	0	0	0				False
+FORUM_CHRC_DC	포럼성격구분코드	3			Y	VARCHAR2 (10 Byte)		None	0	0	0				False
+JOIN_MTHD_CD	가입방식코드	4			Y	VARCHAR2 (10 Byte)		None	0	0	0				False
+MEMB_OPEN_DC	멤버공개구분코드	5			Y	VARCHAR2 (10 Byte)		None	0	0	0				False
+FORUM_CLS_CD	포럼분류코드	6			Y	VARCHAR2 (10 Byte)		None	0	0	0				False
+SEA_KYWD_CONT	검색키워드내용	7			Y	VARCHAR2 (2000 Byte)		None	0	0	0				False
+FORUM_DES_CONT	포럼설명내용	8			Y	VARCHAR2 (2000 Byte)		None	0	0	0				False
+REP_IMG_FILE_NM	대표이미지파일명	9			Y	VARCHAR2 (200 Byte)		None	0	0	0				False
+USE_YN	사용유무	10			Y	CHAR (1 Byte)		None	0	0	0				False
+RGR_ID	등록자ID	11			Y	VARCHAR2 (20 Byte)		None	0	0	0				False
+REG_DTTI	등록일시	12			Y	DATE		None	0	0	0				False
+UDR_ID	수정자ID	13			Y	VARCHAR2 (20 Byte)		None	0	0	0				False
+UPT_DTTI	수정일시	14			Y	DATE		None	0	0	0				False</textarea>
+	<div style="margin:25px 0;text-align:right;"><button type="button" class="btn" onclick="gnrDbtoDto()">Generator</button></div>
+	<textarea class="result" id="resultDbtoDto" onclick="this.select()"></textarea>
+	<textarea class="result" id="resultDbtoResultMap" onclick="this.select()"></textarea>
+</div>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+
+	function gnrScriptAjax(){
+		var ajaxCode = '$.ajax({\n\tmethod : "'+$("#jq1method option:selected").val()+'",\n\turl : "'+$("#jq1url").val()+'",\n\tdataType : "'+$("#jq1dataType option:selected").val()+'",\n\ttimeout : '+$("#jq1timeout").val()+',';
+		
+		ajaxCode += objectParsing("jq1data", "data");
+		ajaxCode += objectParsing("jq1headers", "headers");
+
+		ajaxCode += '\n\tbeforeSend : function(jqXHR, settings){\n\t\n\t},\n\terror : function(jqXHR, textStatus, errorThrown){\n\t\n\t},\n\tsuccess : function(data){\n\t\n\t\},\n\tcomplete : function(jqXHR, textStatus){\n\t\n\t\}\n});';
+		
+
+		$("#codeAjax").val(ajaxCode).height($("#codeAjax").get(0).scrollHeight);
+	}
+	
+	function gnrDbtoDto(){
+		
+		var result = "package "+$("#db1package").val()+";";
+		var sqlmapResult = '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE sqlMap\n\tPUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"\n\t"http://ibatis.apache.org/dtd/sql-map-2.dtd">\n\n<sqlMap namespace="'+$("#db1class").val()+'Map">\n\n\t<typeAlias alias="'+$("#db1class").val()+'" type="'+$("#db1package").val()+'.'+$("#db1class").val()+'" />\n\n\t<resultMap id="'+$("#db1class").val()+'Map" class="'+$("#db1package").val()+'.'+$("#db1class").val()+'">\n';
+		
+		var source = $("#inputDbTable").val().split("\n");
+		var typeArr = [];
+		var variableArr = [];
+		var dbColumnArr = [];
+		var pkVariable = "";
+		var pkColumn = "";
+		
+		var selectQuery = '\t<select id="select'+$("#db1class").val()+'" resultMap="'+$("#db1class").val()+'Map" parameterClass="'+$("#db1class").val()+'">\n\t\tSELECT\n';
+		var insertQuery = '\t<insert id="insert'+$("#db1class").val()+'" parameterClass="'+$("#db1class").val()+'">\n\t\tINSERT INTO '+$("#db1table").val()+'\n\t\t\t(\n';
+		var updateQuery = '\t<update id="update'+$("#db1class").val()+'" parameterClass="'+$("#db1class").val()+'">\n\t\tUPDATE '+$("#db1table").val()+' SET\n';
+		
+		var javaVariable = "";
+		var javaImport = "";
+		source.forEach(function(value){
+			var data = value.split("\t");
+			
+			typeArr.push(dbTypeTojavaType(data[6]));
+			variableArr.push(underToCamel(data[0]));
+			dbColumnArr.push(data[0]);
+			
+			if(dbTypeTojavaType(data[6]) == "Date") javaImport = "\n\nimport java.util.Date;"
+			javaVariable += "\tprivate "+dbTypeTojavaType(data[6])+" "+underToCamel(data[0]);
+			if(data[1] != ""){
+				javaVariable += "; /** "+data[1]+" **/\n";
+			}else{
+				javaVariable += ";\n";
+			}
+			if(data[3] == 1){
+				pkVariable = "#"+underToCamel(data[0])+"#";
+				pkColumn = data[0];
+			}
+		});
+		result += javaImport+"\n\npublic class "+$("#db1class").val()+"{\n\n"+javaVariable;
+		
+		var deleteQuery = '\t<delete id="delete'+$("#db1class").val()+'" parameterClass="'+$("#db1class").val()+'">\n\t\tDELETE FROM '+$("#db1table").val()+' WHERE '+pkColumn+' = '+pkVariable+'\n\t</delete>';
+		
+		result += "\n\tpublic "+$("#db1class").val()+"() {\n\t\tsuper();\n\t}\n\n\tpublic "+$("#db1class").val()+"(";
+		
+		for(var i=0;i<typeArr.length;i++){
+			if(i==typeArr.length-1){
+				result += typeArr[i]+" "+variableArr[i]+") {\n\t\tsuper();\n";
+			}else{
+				result += typeArr[i]+" "+variableArr[i]+", ";
+			}
+		}
+		for(var i=0;i<variableArr.length;i++){
+			result += "\t\tthis."+variableArr[i]+" = "+variableArr[i]+";\n";
+			sqlmapResult += '\t\t<result property="'+variableArr[i]+'" column="'+dbColumnArr[i]+'" />\n';
+			if(i == variableArr.length-1){
+				selectQuery += "\t\t\t"+dbColumnArr[i]+"\n";
+				insertQuery += "\t\t\t"+dbColumnArr[i]+"\n";
+				updateQuery += "\t\t\t"+dbColumnArr[i]+" = #"+variableArr[i]+"#\n";
+			}else{
+				selectQuery += "\t\t\t"+dbColumnArr[i]+",\n";
+				insertQuery += "\t\t\t"+dbColumnArr[i]+",\n";
+				updateQuery += "\t\t\t"+dbColumnArr[i]+" = #"+variableArr[i]+"#,\n";
+			}
+			
+		}
+		result += "\t}\n\n";
+		insertQuery += "\t\t\t)\n\t\tVALUES\n\t\t\t(\n"
+		updateQuery += "\t\tWHERE\n\t\t\t"+pkColumn+" = "+pkVariable+"\n\t</update>";
+		
+		for(var i=0;i<typeArr.length;i++){
+			var methodName = variableArr[i].substring(0,1).toUpperCase()+variableArr[i].substring(1,variableArr[i].length);
+			result += "\tpublic "+typeArr[i]+" get"+methodName+"() {\n\t\treturn "+variableArr[i]+";\n\t}\n\n\tpublic void set"+methodName+"("+typeArr[i]+" "+variableArr[i]+") {\n\t\tthis."+variableArr[i]+" = "+variableArr[i]+";\n\t}";
+			
+			
+			if(i!=typeArr.length-1){
+				result += "\n\n";
+				insertQuery += "\t\t\t#"+variableArr[i]+"#,\n";
+			}else{
+				insertQuery += "\t\t\t#"+variableArr[i]+"#\n";
+			}
+		}
+		
+		insertQuery += "\t\t\t)\n\t</insert>";
+		result += "\n}";
+		
+		selectQuery += "\t\tFROM\n\t\t\t"+$("#db1table").val()+"\n\t\tWHERE\n\t\t\t"+pkColumn+" = "+pkVariable+"\n\t</select>";
+		
+		sqlmapResult += "\t</resultMap>\n\n"+selectQuery+"\n\n"+insertQuery+"\n\n"+updateQuery+"\n\n"+deleteQuery+"\n\n</sqlMap>";
+		
+		
+		$("#resultDbtoDto").val(result).height($("#resultDbtoDto").get(0).scrollHeight);
+		$("#resultDbtoResultMap").val(sqlmapResult).height($("#resultDbtoResultMap").get(0).scrollHeight);
+	}
+
+	function objectParsing(id, type){
+		var ajaxCode = "";
+		var dataSize = $("#"+id).children(".row").length;
+		$("#"+id).children(".row").each(function(index){
+			if(index == 0){
+				if($(this).find(".key").val() == "") return false;
+				ajaxCode += '\n\t'+type+' : {"'+$(this).find(".key").val()+'":"'+$(this).find(".val").val()+'"';
+			}else{
+				if($(this).find(".key").val() == "") { ajaxCode += '}'; return false; }
+				ajaxCode += ', "'+$(this).find(".key").val()+'":"'+$(this).find(".val").val()+'"';
+				if(index === dataSize-1 && $(this).find(".key").val() != ""){
+					ajaxCode += '}';
+				}
+			}
+		});
+		if(ajaxCode != "") ajaxCode += ',';
+		return ajaxCode;
+	}
+	
+	function dbTypeTojavaType(str){
+		if(str.indexOf("NUMBER") == 0){
+			var length = str.substring(str.indexOf("(")+1,str.indexOf(")"));
+			if(length > 11){
+				return "Long";
+			}else{
+				return "int";
+			}
+		}else if(str.indexOf("VARCHAR2") == 0){
+			return "String";
+		}else if(str.indexOf("CHAR") == 0){
+			return "String";
+		}else if(str.indexOf("DATE") == 0){
+			return "Date";
+		}
+	}
+	
+	function underToCamel(str){
+		return str.toLowerCase().replace(/(\_[a-z])/g, function(arg){
+			return arg.toUpperCase().replace('_','');
+		});
+	}
+
+	$(document).on("click", ".form > input", function(){
+		if(!$(this).parent().parent().next().hasClass("row")){
+			$(this).parent().parent().parent().append("<div class='row'><div class='form'><input type='text' class='key' placeholder='Key'><input type='text' class='val' placeholder='Value'></div><button type='button' onclick='$(this).parent().remove();'><i class='ion-close-round'></i></button></div>");
+		}
+		
+	});
+</script>
+</body>
+</html>
